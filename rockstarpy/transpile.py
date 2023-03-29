@@ -233,15 +233,15 @@ class Transpiler(object):
             py_line = "else:" if py_line == "Else" else py_line
 
             py_line = re.sub(
-                r"(P|p)ut (.*) into ({})".format(self.REGEX_VARIABLES),
+                r"^[Pp]ut (.*) into ({})".format(self.REGEX_VARIABLES),
                 r"\g<2> = \g<1>",
                 py_line,
             )
             py_line = re.sub(
-                r"(B|b)uild ({}) up(\, up)*".format(self.REGEX_VARIABLES), r"\g<1> += 1", py_line
+                r"^[Bb]uild ({}) up(\, up)*".format(self.REGEX_VARIABLES), r"\g<1> += 1", py_line
             )
             py_line = re.sub(
-                r"(K|k)nock ({}) down(\, down)*".format(self.REGEX_VARIABLES),
+                r"^[Kk]nock ({}) down(\, down)*".format(self.REGEX_VARIABLES),
                 r"\g<1> -= " + str(1 + py_line.count(", down")),
                 py_line,
             )
@@ -251,7 +251,7 @@ class Transpiler(object):
                 py_line,
             )
             py_line = re.sub(
-                r"(?:^(S|s)ay|^(S|s)hout|^(W|w)hisper|^(S|s)cream) (.*)", r"print(\g<1>)", py_line
+                r"(?:^[Ss]ay|^[Ss]hout|^[Ww]hisper|^[Ss]cream) (.*)", r"print(\g<1>)", py_line
             )
 
             py_line = py_line.replace(" is ", " = ", 1)
