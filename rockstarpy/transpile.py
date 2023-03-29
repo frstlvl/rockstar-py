@@ -238,7 +238,8 @@ class Transpiler(object):
                 py_line,
             )
             py_line = re.sub(
-                r"^[Bb]uild ({}) up(\, up)*".format(self.REGEX_VARIABLES), r"\g<1> += 1", py_line
+                r"^[Bb]uild ({}) up(\, up)*".format(self.REGEX_VARIABLES), r"\g<1> += "+ str(1 + py_line.count(", up")),
+                py_line
             )
             py_line = re.sub(
                 r"^[Kk]nock ({}) down(\, down)*".format(self.REGEX_VARIABLES),
