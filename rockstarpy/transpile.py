@@ -58,7 +58,15 @@ class Transpiler(object):
             " is as little as ": " <= ",
             " is as small as ": " <= ",
             " is as weak as ": " <= ",
-            " is not ": " != ",
+            " isn't ": " != ",
+            " isnt ": " != ",
+            " ain't ": " != ",
+            " aren't ": " != ",
+            " arent ": " != ",
+            " weren't ": " != ",
+            " werent ": " != ",
+            " wasn't ": " != ",
+            " wasnt ": " != ",
             " aint ": " != ",
             "Until ": "while not ",
             "While ": "while ",
@@ -225,15 +233,15 @@ class Transpiler(object):
             py_line = "else:" if py_line == "Else" else py_line
 
             py_line = re.sub(
-                r"Put (.*) into ({})".format(self.REGEX_VARIABLES),
+                r"(P|p)ut (.*) into ({})".format(self.REGEX_VARIABLES),
                 r"\g<2> = \g<1>",
                 py_line,
             )
             py_line = re.sub(
-                r"Build ({}) up".format(self.REGEX_VARIABLES), r"\g<1> += 1", py_line
+                r"(B|b)uild ({}) up(\, up)*".format(self.REGEX_VARIABLES), r"\g<1> += 1", py_line
             )
             py_line = re.sub(
-                r"Knock ({}) down(\, down)*".format(self.REGEX_VARIABLES),
+                r"(K|k)nock ({}) down(\, down)*".format(self.REGEX_VARIABLES),
                 r"\g<1> -= " + str(1 + py_line.count(", down")),
                 py_line,
             )
@@ -243,7 +251,7 @@ class Transpiler(object):
                 py_line,
             )
             py_line = re.sub(
-                r"(?:Say|Shout|Whisper|Scream) (.*)", r"print(\g<1>)", py_line
+                r"(?:^(S|s)ay|^(S|s)hout|^(W|w)hisper|^(S|s)cream) (.*)", r"print(\g<1>)", py_line
             )
 
             py_line = py_line.replace(" is ", " = ", 1)
